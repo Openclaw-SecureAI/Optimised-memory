@@ -26,7 +26,7 @@ log "gateway status"
 openclaw gateway status
 
 log "direct CLI memory search sanity (may be denied by scope if no session context)"
-openclaw memory search --query "CyberAtlas" --max-results 3 || true
+openclaw memory search --query "memory" --max-results 3 || true
 
 cat <<'EOF'
 
