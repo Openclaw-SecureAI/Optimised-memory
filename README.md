@@ -1,12 +1,12 @@
-# Optimised memory
+# Optimized Memory for OpenClaw
 
-A small shareable setup bundle for enabling **OpenClaw memory with QMD** in a way that is actually easy to reproduce.
+A small, shareable setup bundle for enabling **OpenClaw memory with QMD** in a way that is reproducible, testable, and easier to troubleshoot.
 
-This repo packages the parts that matter:
+This repository packages the parts that matter:
 - a tested install script
-- a ready-to-paste OpenClaw config snippet
-- a verification script/checklist
-- the key gotchas discovered during a real install
+- a ready-to-adapt OpenClaw config snippet
+- a verification script
+- the main gotchas discovered during a real installation
 
 ## What this enables
 
@@ -21,24 +21,25 @@ It also enables:
 
 ## Why this repo exists
 
-Just setting:
+Setting:
 
 ```json5
 memory: { backend: "qmd" }
 ```
 
-is not enough.
+is not enough on its own.
 
 You also need:
 - `unzip` available
 - Bun installed
 - QMD installed correctly
 - the gateway restarted
-- a proper verification path
+- a real verification path
 
-Important real-world note:
-- the GitHub Bun install path may produce a broken source-layout package
-- the **published package** worked reliably in testing
+### Important real-world note
+
+The GitHub Bun install path may produce a broken source-layout package.
+In testing, the **published package** worked reliably.
 
 Use:
 
@@ -54,22 +55,22 @@ bun install -g https://github.com/tobi/qmd
 
 unless you have independently verified that route on your machine.
 
-## Quick install
+## Quick start
 
-### 1. Clone repo
+### 1. Clone the repo
 
 ```bash
-git clone https://github.com/Openclaw-SecureAI/Optimised-memory.git
-cd Optimised-memory
+git clone https://github.com/Openclaw-SecureAI/Optimised-memory.git optimized-memory
+cd optimized-memory
 ```
 
-### 2. Run install script
+### 2. Run the install script
 
 ```bash
 bash scripts/install-qmd.sh
 ```
 
-This script will:
+The script will:
 - install `unzip` and `zip` if missing
 - install Bun if missing
 - install QMD from the published package
@@ -77,7 +78,7 @@ This script will:
 - restart the OpenClaw gateway
 - print gateway status
 
-### 3. Apply config snippet
+### 3. Apply the config snippet
 
 Merge the example from:
 
@@ -98,7 +99,7 @@ Minimum important pieces:
 - `agents.defaults.memorySearch.experimental.sessionMemory = true`
 - `agents.defaults.compaction.memoryFlush.enabled = true`
 
-### 4. Verify
+### 4. Verify the installation
 
 Run:
 
@@ -110,10 +111,10 @@ This checks:
 - Bun exists
 - QMD exists
 - `qmd --help` works
-- gateway is running
+- the gateway is running
 - OpenClaw sees QMD in a direct/session memory context
 
-## Config example
+## Configuration example
 
 See:
 
@@ -123,7 +124,7 @@ openclaw.memory.qmd.example.json5
 
 Highlights:
 - direct chats allowed by default
-- memory citations on
+- memory citations enabled
 - default workspace memory files included
 - moderate recall limits
 - session transcript indexing enabled
@@ -140,32 +141,32 @@ That does **not** necessarily mean QMD is broken.
 
 It usually means:
 - you tested outside a real session context
-- and your QMD scope expects a direct chat / known session
+- your QMD scope expects a direct chat or known session
 
-So the real verification should happen in an actual OpenClaw direct chat or session context.
+Real verification should happen in an actual OpenClaw direct chat or session context.
 
 ## Expected success signal
 
-A successful real-session verification should show memory search returning something like:
+A successful real-session verification should return memory search output that includes something like:
 
 ```text
 provider: "qmd"
 model: "qmd"
 ```
 
-That is the important proof that OpenClaw is actually using QMD and not silently falling back.
+That is the important proof that OpenClaw is using QMD rather than silently falling back.
 
-## Files
+## Repository contents
 
-- `scripts/install-qmd.sh` — install Bun + QMD + restart gateway
-- `scripts/verify-qmd.sh` — verify QMD + gateway + OpenClaw path
+- `scripts/install-qmd.sh` — installs Bun + QMD and restarts the gateway
+- `scripts/verify-qmd.sh` — verifies QMD, the gateway, and the OpenClaw path
 - `openclaw.memory.qmd.example.json5` — ready-to-adapt config example
 - `docs/troubleshooting.md` — known issues and fixes
 
 ## Platform notes
 
 Tested target:
-- Linux with OpenClaw gateway running under the same user
+- Linux with the OpenClaw gateway running under the same user
 
 Should also work with adaptation on:
 - macOS
